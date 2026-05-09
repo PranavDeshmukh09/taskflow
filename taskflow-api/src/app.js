@@ -28,3 +28,28 @@ app.use(express.urlencoded({ extended: true }));
 // API routes
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/projects', projectRouter);
+app.use('/api/v1/tags', tagRouter);
+app.use('/api/v1/tasks', taskRouter);
+app.use('/api/v1/dashboard', dashboardRouter);
+app.use('/api/v1/users', userRouter);
+app.use('/api/v1/activity', activityRouter);
+
+// Health check
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
+// 404 handler
+app.use((req, res) => {
+  res.status(404).json({
+    error: {
+      code: 'NOT_FOUND',
+      message: `Route ${req.method} ${req.url} not found`
+    }
+  });
+});
+
+// Global error handler
+app.use(errorHandler);
+
+module.exports = app;
