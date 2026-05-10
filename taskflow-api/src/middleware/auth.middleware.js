@@ -1,3 +1,5 @@
+// src/middleware/auth.middleware.js
+
 const jwt = require('jsonwebtoken');
 const db = require('../models');
 
@@ -14,7 +16,7 @@ module.exports = async (req, res, next) => {
       });
     }
     
-   const token = authHeader.split(' ')[1];
+    const token = authHeader.split(' ')[1];
     
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     
@@ -28,6 +30,7 @@ module.exports = async (req, res, next) => {
         }
       });
     }
+    
     // Check if password was changed after token was issued
     if (user.passwordChangedAt && decoded.iat) {
       const passwordChangedTime = Math.floor(user.passwordChangedAt.getTime() / 1000);
@@ -43,3 +46,24 @@ module.exports = async (req, res, next) => {
     
     req.user = user;
     next();
+  } catch (error) {
+    if (error.name === 'JsonWebTokenError') {
+      return res.status(401).json({
+        error: {
+          code: 'INVALID_TOKEN',
+          message: 'Invalid token'
+        }
+      });
+    }
+    if (error.name === 'TokenExpiredError') {
+      return res.status(401).json({
+        error: {
+          code: 'TOKEN_EXPIRED',
+          message: 'Token expired'
+        }
+      });
+    }
+    
+    next(error);
+  }
+};
