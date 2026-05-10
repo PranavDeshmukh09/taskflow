@@ -28,3 +28,18 @@ module.exports = async (req, res, next) => {
         }
       });
     }
+    // Check if password was changed after token was issued
+    if (user.passwordChangedAt && decoded.iat) {
+      const passwordChangedTime = Math.floor(user.passwordChangedAt.getTime() / 1000);
+      if (passwordChangedTime > decoded.iat) {
+        return res.status(401).json({
+          error: {
+            code: 'TOKEN_INVALIDATED',
+            message: 'Password changed, please login again'
+          }
+        });
+      }
+    }
+    
+    req.user = user;
+    next();
