@@ -20,3 +20,17 @@ const sequelize = new Sequelize(
     }
   }
 );
+const db = {};
+
+db.sequelize = sequelize;
+db.Sequelize = Sequelize;
+
+// Import models
+db.User = require('./User.model')(sequelize, Sequelize);
+db.PasswordResetToken = require('./PasswordResetToken.model')(sequelize, Sequelize);
+db.Project = require('./Project.model')(sequelize, Sequelize);
+db.Tag = require('./Tag.model')(sequelize, Sequelize);
+db.Task = require('./Task.model')(sequelize, Sequelize);
+db.TaskTag = require('./TaskTag.model')(sequelize, Sequelize);
+db.ReminderLog = require('./ReminderLog.model')(sequelize, Sequelize);
+db.ActivityLog = require('./ActivityLog.model')(sequelize, Sequelize);
