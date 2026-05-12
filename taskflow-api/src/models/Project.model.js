@@ -18,7 +18,21 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(500),
       allowNull: true
     },
-    
+    colour: {
+      type: DataTypes.STRING(7),
+      allowNull: false,
+      defaultValue: '#3B82F6'
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+      field: 'created_at'
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+      field: 'updated_at'
+    }
   }, {
     tableName: 'projects',
     timestamps: true,
