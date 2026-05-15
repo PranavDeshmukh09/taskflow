@@ -34,6 +34,20 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
       field: 'new_data'
     },
+    ipAddress: {
+      type: DataTypes.STRING(45),
+      allowNull: true,
+      field: 'ip_address'
+    },
+    userAgent: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+      field: 'user_agent'
+    },
+    status: {
+      type: DataTypes.STRING(20),
+      defaultValue: 'success'
+    },
     errorMessage: {
       type: DataTypes.TEXT,
       allowNull: true,
