@@ -10,7 +10,30 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       field: 'user_id'
     },
-    
+    action: {
+      type: DataTypes.STRING(50),
+      allowNull: false
+    },
+    entityType: {
+      type: DataTypes.STRING(50),
+      allowNull: true,
+      field: 'entity_type'
+    },
+    entityId: {
+      type: DataTypes.UUID,
+      allowNull: true,
+      field: 'entity_id'
+    },
+    oldData: {
+      type: DataTypes.JSONB,
+      allowNull: true,
+      field: 'old_data'
+    },
+    newData: {
+      type: DataTypes.JSONB,
+      allowNull: true,
+      field: 'new_data'
+    },
     errorMessage: {
       type: DataTypes.TEXT,
       allowNull: true,
